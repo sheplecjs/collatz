@@ -16,7 +16,7 @@ fn main() {
         io::stdin()
             .read_line(&mut collatz)
             .expect("Failed to read line");
-
+        
         let input: BigInt = match collatz.trim().parse() {
             Ok(big_int) => big_int,
             Err(_) => {
@@ -35,7 +35,10 @@ fn main() {
                                 d = rng.gen_bigint(num).abs();
                                 break;
                             }
-                            Err(_) => continue,
+                            Err(_) => {
+                                println!("Input a valid number of bits.");
+                                continue;
+                            },
                         };
                     };
                     d
@@ -50,27 +53,27 @@ fn main() {
             },
         };
 
-        collatz_sequence(input);
+        let mut seq: BigInt = input.clone(); // for current transformation;
+        let mut step: u32 = 1;
 
+        loop {
+            println!("Step {step}: {seq}");
+
+            if seq == BigInt::from(1) {
+                println!("{input} reduced to 1 in {step} steps.");
+                break;
+            }
+
+            seq = collatz_sequence(seq);
+            step += 1
+        }
     }
 }
 
-fn collatz_sequence(n: BigInt) {
-
-    let mut collatz_seq: BigInt = n.clone();
-
-    let mut step: u32 = 1;
-
-    loop {
-        println!("Step {step}: {collatz_seq}");
-                if collatz_seq == BigInt::from(1) {
-                    println!("{n} reduced to 1 in {step} steps.");
-                    break;
-                } else if collatz_seq.is_odd() {
-                    collatz_seq = (collatz_seq*3) + 1;
-                } else {
-                    collatz_seq = collatz_seq / 2;
-                }
-        step += 1
-        }
+fn collatz_sequence(n: BigInt) -> BigInt {
+    if n.is_odd() {
+        (n*3) + 1
+    } else {
+        n / 2
+    }
 }
