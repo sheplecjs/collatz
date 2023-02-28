@@ -64,13 +64,13 @@ fn main() {
                 break;
             }
 
-            seq = collatz_sequence(seq);
+            seq = collatz(seq);
             step += 1
         }
     }
 }
 
-fn collatz_sequence(n: BigInt) -> BigInt {
+fn collatz(n: BigInt) -> BigInt {
     if n.is_odd() {
         (n*3) + 1
     } else {
