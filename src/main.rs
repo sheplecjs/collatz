@@ -77,3 +77,21 @@ fn collatz_sequence(n: BigInt) -> BigInt {
         n / 2
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use num_bigint::BigInt;
+    use super::*;
+    
+    #[test]
+    fn test_collatz_sequence_odd() {
+        let result_odd: BigInt = collatz_sequence(BigInt::from(7));
+        assert_eq!(result_odd, BigInt::from(22));
+    }
+
+    #[test]
+    fn test_collatz_sequence_even() {
+        let result_even: BigInt = collatz_sequence(BigInt::from(8));
+        assert_eq!(result_even, BigInt::from(4));
+    }
+}
