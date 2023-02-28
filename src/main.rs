@@ -9,6 +9,7 @@ fn main() {
         println!(concat!(
             "Input a positive integer to show its Collatz sequence.\n",
             "Input 'random' to use a random integer.\n",
+            "Input 'range' to test a range of integers.\n",
             "Input 'exit' to exit."));
 
         let mut collatz = String::new();
@@ -18,10 +19,10 @@ fn main() {
             .expect("Failed to read line");
         
         let input: BigInt = match collatz.trim().parse() {
-            Ok(big_int) => big_int,
+            Ok(big_int) => big_int, // specific number specified
             Err(_) => {
                 match collatz.trim() {
-                    "random" => {
+                    "random" => { // random bits generator
                         let d: BigInt;
                         loop {
                         println!("How many bits?");
@@ -43,30 +44,77 @@ fn main() {
                     };
                     d
                     },
-                    "exit" => {
+                    "exit" => { // exit condition
                         break;
                     },
-                    _ => {
+                    "range" => { // range condition
+                        let mut start: BigInt;
+                        let end: usize;
+                        loop {
+                            println!("Start:");
+                            let mut s = String::new();
+                            io::stdin()
+                                .read_line(&mut s)
+                                .expect("Failed to read line");
+                            match s.trim().parse() {
+                                Ok(big_int) => {
+                                    start = big_int;
+                                },
+                                Err(_) => {
+                                    println!("Invalid input.");
+                                    continue;
+                                }
+                            }
+                            println!("How many?");
+                            let mut e = String::new();
+                            io::stdin()
+                                .read_line(&mut e)
+                                .expect("Failed to read line");
+                            match e.trim().parse() {
+                                Ok(num) => {
+                                    end = num;
+                                    break;
+                                },
+                                Err(_) => {
+                                    println!("Invalid input.");
+                                    continue;
+                                }
+                            }
+                        }
+                        for x in 0..end {
+                            let t: BigInt = BigInt::from(start.clone() + BigInt::from(x));
+                            sequence(t, false);
+                        }
+                        continue;
+                    },
+                    _ => { // non-recognized command
                         continue;
                     },
                 }
             },
         };
 
-        let mut seq: BigInt = input.clone(); // for current transformation;
-        let mut step: u32 = 1;
+        sequence(input, true)
+    }
+}
 
-        loop {
+fn sequence(n: BigInt, verbose: bool) {
+    let mut seq: BigInt = n.clone(); // for current transformation;
+    let mut step: u32 = 1;
+
+    loop {
+
+        if verbose {
             println!("Step {step}: {seq}");
-
-            if seq == BigInt::from(1) {
-                println!("{input} reduced to 1 in {step} steps.");
-                break;
-            }
-
-            seq = collatz(seq);
-            step += 1
         }
+
+        if seq == BigInt::from(1) {
+            println!("{n} reduced to 1 in {step} steps.");
+            break;
+        }
+
+        seq = collatz(seq);
+        step += 1
     }
 }
 
