@@ -4,7 +4,11 @@
 
 The Collatz conjecture, also known as the *3n+1* problem, seeks to prove that any positive integer will be reduced to 1 when subjected to a simple set of transformations. Given an even number, the next number in the sequence is that number divided by 2. Given an odd number, the next number is that number times three plus one.
 
-This project aims to define a CLI for interactively exploring the Collatz conjecture.
+This project aims to define a CLI for interactively exploring the Collatz conjecture. Included functionality:
+
++ Detailed sequences for specific inputs and random bits
++ Steps reporting for ranges of inputs
++ Recording of unique inputs and step values in persistent file
 
 ## Installation
 
