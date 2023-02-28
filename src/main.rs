@@ -149,14 +149,14 @@ mod tests {
     use super::*;
     
     #[test]
-    fn test_collatz_sequence_odd() {
-        let result_odd: BigInt = collatz_sequence(BigInt::from(7));
+    fn test_sequence_odd() {
+        let result_odd: BigInt = collatz(BigInt::from(7));
         assert_eq!(result_odd, BigInt::from(22));
     }
 
     #[test]
-    fn test_collatz_sequence_even() {
-        let result_even: BigInt = collatz_sequence(BigInt::from(8));
+    fn test_sequence_even() {
+        let result_even: BigInt = collatz(BigInt::from(8));
         assert_eq!(result_even, BigInt::from(4));
     }
 }
