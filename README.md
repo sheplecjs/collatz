@@ -12,6 +12,8 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 
 ## Installation
 
+A Dockerfile is provided running the rust:slim-buster image.
+
 Running and/or building from source requires a stable version of Rust and Cargo.
 
 `cargo run` - to run the main CLI interface.
