@@ -1,4 +1,7 @@
 use std::io;
+use std::io::Write;
+use std::path::Path;
+use std::fs::File;
 use num_bigint::{BigInt, RandBigInt};
 use num_integer::Integer;
 use num_traits::sign::Signed;
@@ -136,6 +139,12 @@ fn collatz(n: BigInt) -> BigInt {
 }
 
 fn read_history() -> DataFrame {
+
+    if Path::new("history.csv").is_file() == false {
+        let mut file: File = File::create("history.csv").expect("History file creation error");
+        write!(file, "Number,Steps").expect("Issue writing headers to new history file.");
+    }
+    
     CsvReader::from_path("history.csv")
             .expect("File")
             .has_header(true)
