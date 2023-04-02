@@ -39,7 +39,7 @@ Step 4: 8
 Step 5: 4
 Step 6: 2
 Step 7: 1
-10 reduced to 1 in 7 steps.
+10 reduced to 1 in 7 steps. Took 0 seconds.
 Input a positive integer to show its Collatz sequence.
 Input 'random' to use a random integer.
 Input 'range' to test a range of integers.
@@ -61,7 +61,7 @@ Step 7: 8
 Step 8: 4
 Step 9: 2
 Step 10: 1
-12 reduced to 1 in 10 steps.
+12 reduced to 1 in 10 steps. Took 0 seconds.
 Input a positive integer to show its Collatz sequence.
 Input 'random' to use a random integer.
 Input 'range' to test a range of integers.
