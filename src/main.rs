@@ -10,18 +10,6 @@ use polars::prelude::{DataFrame, CsvReader, CsvWriter, SerReader, SerWriter, Nam
 use polars::frame::UniqueKeepStrategy::First;
 use polars::df;
 
-
-
-// #[allow(unused)]
-// fn main() {
-// let now = Instant::now();
-
-// // Calling a slow function, it may take a while
-
-// let elapsed_time = now.elapsed();
-// println!("Running slow_function() took {} seconds.", elapsed_time.as_secs());
-// }
-
 fn main() {
 
     loop {
