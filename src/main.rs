@@ -2,12 +2,25 @@ use std::io;
 use std::io::Write;
 use std::path::Path;
 use std::fs::File;
+use std::time::Instant;
 use num_bigint::{BigInt, RandBigInt};
 use num_integer::Integer;
 use num_traits::sign::Signed;
 use polars::prelude::{DataFrame, CsvReader, CsvWriter, SerReader, SerWriter, NamedFrom};
 use polars::frame::UniqueKeepStrategy::First;
 use polars::df;
+
+
+
+// #[allow(unused)]
+// fn main() {
+// let now = Instant::now();
+
+// // Calling a slow function, it may take a while
+
+// let elapsed_time = now.elapsed();
+// println!("Running slow_function() took {} seconds.", elapsed_time.as_secs());
+// }
 
 fn main() {
 
@@ -23,6 +36,8 @@ fn main() {
         io::stdin()
             .read_line(&mut collatz)
             .expect("Failed to read line");
+
+        let now = Instant::now();
         
         let input: BigInt = match collatz.trim().parse() {
             Ok(big_int) => big_int, // specific number specified
@@ -89,7 +104,7 @@ fn main() {
                         }
                         for x in 0..end {
                             let t: BigInt = BigInt::from(start.clone() + BigInt::from(x));
-                            sequence(t, false);
+                            sequence(t, false, now);
                         }
                         continue;
                     },
@@ -100,11 +115,11 @@ fn main() {
             },
         };
 
-        sequence(input, true)
+        sequence(input, true, now)
     }
 }
 
-fn sequence(n: BigInt, verbose: bool) {
+fn sequence(n: BigInt, verbose: bool, now: Instant) {
     let mut seq: BigInt = n.clone(); // for current transformation;
     let mut step: u32 = 1;
 
@@ -115,7 +130,9 @@ fn sequence(n: BigInt, verbose: bool) {
         }
 
         if seq == BigInt::from(1) {
-            println!("{n} reduced to 1 in {step} steps.");
+            let elapsed_time = now.elapsed();
+            let secs = elapsed_time.as_secs();
+            println!("{n} reduced to 1 in {step} steps. Took {secs} seconds.");
             let df_old: DataFrame = read_history();
             let new_data: DataFrame = df!("Number" => &[n.to_string()], "Steps" => &[step.to_string()]).expect("DataFrame");
             let mut df_new: DataFrame = df_old.vstack(&new_data).unwrap();
