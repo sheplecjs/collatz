@@ -1,10 +1,7 @@
-FROM amazonlinux:2023
+FROM rust:slim-buster
 
 # Install application into container
 COPY . .
-
-# Install Rust
-RUN yum install -y cargo
 
 # Compile native release build
 RUN RUSTFLAGS="-C target-cpu=native" cargo build --release
