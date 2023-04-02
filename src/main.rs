@@ -91,8 +91,9 @@ fn main() {
                             }
                         }
                         for x in 0..end {
+                            let now_range: Instant = Instant::now();
                             let t: BigInt = BigInt::from(start.clone() + BigInt::from(x));
-                            sequence(t, false, now);
+                            sequence(t, false, now_range);
                         }
                         continue;
                     },
