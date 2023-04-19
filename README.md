@@ -20,6 +20,14 @@ Running and/or building from source requires a stable version of Rust and Cargo.
 
 `RUSTFLAGS="-C target-cpu=native" cargo build --release` - to compile an optimized binary.
 
+### Note:
+
+The release profile for cargo build is modified from defaults in the following ways which offer potentially better binary performance at the cost of increased compile time:
+
++ Link Time Optimization is set to 'true' (same as 'fat')
++ Codegen units are set to 1 (default for --release is 16)
++ Panic is set to 'abort' - this just fails more quickly
+
 ## Usage
 
 The CLI will prompt for a positive integer to run through a Collatz sequence. It is also possible to input 'random'. Steps in the sequence are shown as they are calculated. Upon completion, the total steps are printed to the console and you are returned to the starting prompt. Specifying 'range' will allow you to specify a starting point and a number of incrementing iterations. Massive numbers are supported using the BigInt struct. Using any of the provided options, unique solutions will be added to the persistent history file as they are reached, recording the input and number of steps taken. An input of 'exit' will exit the program.
