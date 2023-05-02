@@ -1,5 +1,12 @@
 # Collatz
 
+<style>
+  code {
+    white-space : pre-wrap !important;
+    word-break: break-word;
+  }
+</style>
+
 ## Description
 
 The Collatz conjecture, also known as the *3n+1* problem, seeks to prove that any positive integer will be reduced to 1 when subjected to a simple set of transformations. Given an even number, the next number in the sequence is that number divided by 2. Given an odd number, the next number is that number times three plus one.
