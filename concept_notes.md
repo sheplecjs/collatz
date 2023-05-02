@@ -13,6 +13,8 @@ With this in mind, consider any step in a Collatz subsequence where the current 
 $$
 u_{n} = n \mod 10 \\
 $$
+
+
 $$
 pu_{n} = parity(\lfloor(n \mod 100) / 10 \rfloor) \\
 $$
