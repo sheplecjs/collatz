@@ -6,8 +6,8 @@ The Collatz conjecture, also known as the *3n+1* problem, seeks to prove that an
 
 This project aims to define a CLI for interactively exploring the Collatz conjecture. Included functionality:
 
-+ Detailed sequences for specific inputs and random bits
-+ Steps reporting for ranges of inputs
++ Detailed sequences for specific inputs with annotated transformations
++ Steps, and computation time reporting for random bits and ranges of inputs
 + Recording of unique inputs and step values in persistent file
 
 ## Installation
@@ -40,44 +40,34 @@ Input 'random' to use a random integer.
 Input 'range' to test a range of integers.
 Input 'exit' to exit.
 ```
-`foo@bar:~$ 10`
+`10`
 ```console
-Step 1: 10
-Step 2: 5
-Step 3: 16
-Step 4: 8
-Step 5: 4
-Step 6: 2
-Step 7: 1
+Step 1: 10 - (Reduce)
+Step 2: 5 - (Augment)
+Step 3: 16 - (Reduce)
+Step 4: 8 - (Reduce)
+Step 5: 4 - (Reduce)
+Step 6: 2 - (Reduce)
+Step 7: 1 - (Base)
 10 reduced to 1 in 7 steps. Took 0 seconds.
 Input a positive integer to show its Collatz sequence.
 Input 'random' to use a random integer.
 Input 'range' to test a range of integers.
 Input 'exit' to exit.
 ```
-`foo@bar:~$ random`
+`random`
 ```console
 How many bits?
 ```
-`foo@bar:~$ 4`
+`4096`
 ```console
-Step 1: 12
-Step 2: 6
-Step 3: 3
-Step 4: 10
-Step 5: 5
-Step 6: 16
-Step 7: 8
-Step 8: 4
-Step 9: 2
-Step 10: 1
-12 reduced to 1 in 10 steps. Took 0 seconds.
+971726121250224429417262494028854911280777504314214600622785496787474748657674979106790234904200898615074908639963468183581338655156474899287322992232749594093090248086888945187756345998332769284985512492012025532807510622603325124488897335479103858564926491861994399092114775454129739992858202375654820473190712757642856425455714354757441001087819285337780935782150925000013202732065323472413153984997562198933505097350200691053218296804752978522550409157608219831402414189229392595327104162336547181946158178776191465412932990359139431053144402912267228889465944309513227148179761959474563130982586469297814199105233960742374942461312437046848493640979215338958403079782101352228517368276864301915683358356450235724546084333392819641224454893962965063593396896988275881702473180351614998580746272213591447097768375314833461510809847283564877744749957529441777905185091823630454247989360158169620426314606415095925642033734377283584788537846704024207402109607796986783559073267664904851245972696329313952561257436779191592280283499265048054633146760469052579045185952846764331063562618025690674419950413522932556719393614557959341086837850405712305435992861134342689459557804390426847518294350967154440487324597681258913716328858446 reduced to 1 in 29117 steps. Took 3 seconds.
 Input a positive integer to show its Collatz sequence.
 Input 'random' to use a random integer.
 Input 'range' to test a range of integers.
 Input 'exit' to exit.
 ```
-`foo@bar:~$ exit`
+`exit`
 
 ## License
 
@@ -87,4 +77,4 @@ MIT
 
 - Switch to storing history in sqlite
 - Trigger early exit once a tested start is hit mid-sequence
-- Implement initial check for power of 2 if length of input is large enough 
+- Implement initial check for power of 2 if length of input is large enough
