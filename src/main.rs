@@ -11,7 +11,7 @@ use polars::frame::UniqueKeepStrategy::First;
 use polars::df;
 
 // sqlite readers and writers
-mod db;
+// mod db;
 
 fn main() {
 
