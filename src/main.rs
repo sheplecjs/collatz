@@ -23,6 +23,7 @@ fn main() {
             "Input 'exit' to exit."));
 
         let mut collatz = String::new();
+        let mut def_verbose = true;
 
         io::stdin()
             .read_line(&mut collatz)
@@ -36,6 +37,7 @@ fn main() {
                 match collatz.trim() {
                     "random" => { // random bits generator
                         let d: BigInt;
+                        def_verbose = false;
                         loop {
                         println!("How many bits?");
                         let mut digits = String::new();
@@ -107,7 +109,7 @@ fn main() {
             },
         };
 
-        sequence(input, true, now)
+        sequence(input, def_verbose, now)
     }
 }
 
