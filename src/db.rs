@@ -44,3 +44,8 @@ pub fn check_for_entry(start: BigInt) -> String {
         &start.to_string()).unwrap();
 
 }
+
+// pub fn get_highest_continuous() -> BigInt {
+//     // may need a recursive expression or CTE to get this...
+//     let conn = Connection::open("collatz.db")?;
+// }
