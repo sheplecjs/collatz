@@ -14,6 +14,10 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 
 A Dockerfile is provided running the rust:slim-buster image.
 
+A docker-compose file is provided which will run a postgresql db alongside the main CLI with the following command:
+
+`docker-compose up --rm collatz`
+
 Running and/or building from source requires a stable version of Rust and Cargo.
 
 `cargo run` - to run the main CLI interface.
@@ -35,7 +39,7 @@ At startup, the CLI will prompt for a storage option - defaulting to a local pos
 For example:
 
 ```console
-Input psql connection string to use db (default, host=localhost user=postgresql).
+Input psql connection string to use db (default, postgresql://postgres:@db:5432/postgres).
 Input 'flat' to use flat file.
 
 Input a positive integer to show its Collatz sequence.
