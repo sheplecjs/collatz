@@ -1,17 +1,11 @@
 use std::io;
-use std::io::Write;
-use std::path::Path;
-use std::fs::File;
 use std::time::Instant;
 use num_bigint::{BigInt, RandBigInt};
 use num_integer::Integer;
 use num_traits::sign::Signed;
-use polars::prelude::{DataFrame, CsvReader, CsvWriter, SerReader, SerWriter, NamedFrom};
-use polars::frame::UniqueKeepStrategy::First;
-use polars::df;
 
-// sqlite readers and writers
-// mod db;
+// history update funcs
+mod db;
 
 fn main() {
 
@@ -158,21 +152,7 @@ fn sequence(n: BigInt, verbose: bool, now: Instant, save_option: String) {
 
             match save_option.as_ref() {
                 "flat" => {
-                
-                // refactor out read old; DONE
-                let df_old: DataFrame = read_history();
-
-                // refactor out make new;
-                let new_data: DataFrame = make_new_frame(n, step);
-
-                // refactor out stack old and new;
-                let mut df_new: DataFrame = stack_old_and_new(df_old, new_data);
-
-                //  refactor out get unique;
-                df_new = get_unique_df(df_new);
-
-                // refactor out write new;
-                write_new_csv(df_new);
+                    db::update_flat_file(n, step);
                 },
                 
                 _ => {
@@ -196,36 +176,46 @@ fn collatz(n: BigInt) -> BigInt {
     }
 }
 
-fn write_new_csv(mut df: DataFrame) {
-    let mut file = std::fs::File::create("history.csv").unwrap();
-    CsvWriter::new(&mut file).finish(&mut df).unwrap();
-}
+// fn update_flat_file(n: BigInt, step: u32) {
 
-fn get_unique_df(df: DataFrame) -> DataFrame {
-    df.unique(None, First).expect("DataFrame")
-}
+//     let df_old: DataFrame = read_history();
+//     let new_data: DataFrame = make_new_frame(n, step);
+//     let mut df_new: DataFrame = stack_old_and_new(df_old, new_data);
+//     df_new = get_unique_df(df_new);
 
-fn stack_old_and_new(df_old: DataFrame, df_new: DataFrame) -> DataFrame {
-    df_old.vstack(&df_new).unwrap()
-}
+//     write_new_csv(df_new);
 
-fn make_new_frame(n: BigInt, step: u32) -> DataFrame {
-    df!("Number" => &[n.to_string()], "Steps" => &[step.to_string()]).expect("DataFrame")
-}
-
-fn read_history() -> DataFrame {
-
-    if Path::new("history.csv").is_file() == false {
-        let mut file: File = File::create("history.csv").expect("History file creation error");
-        write!(file, "Number,Steps").expect("Issue writing headers to new history file.");
-    }
+//     fn write_new_csv(mut df: DataFrame) {
+//         let mut file = std::fs::File::create("history.csv").unwrap();
+//         CsvWriter::new(&mut file).finish(&mut df).unwrap();
+//     }
     
-    CsvReader::from_path("history.csv")
-            .expect("File")
-            .has_header(true)
-            .infer_schema(Some(0)) // everything as utf8 so that BigInt cast will work
-            .finish().expect("DataFrame")
-}
+//     fn get_unique_df(df: DataFrame) -> DataFrame {
+//         df.unique(None, First).expect("DataFrame")
+//     }
+    
+//     fn stack_old_and_new(df_old: DataFrame, df_new: DataFrame) -> DataFrame {
+//         df_old.vstack(&df_new).unwrap()
+//     }
+    
+//     fn make_new_frame(n: BigInt, step: u32) -> DataFrame {
+//         df!("Number" => &[n.to_string()], "Steps" => &[step.to_string()]).expect("DataFrame")
+//     }
+    
+//     fn read_history() -> DataFrame {
+    
+//         if Path::new("history.csv").is_file() == false {
+//             let mut file: File = File::create("history.csv").expect("History file creation error");
+//             write!(file, "Number,Steps").expect("Issue writing headers to new history file.");
+//         }
+        
+//         CsvReader::from_path("history.csv")
+//                 .expect("File")
+//                 .has_header(true)
+//                 .infer_schema(Some(0)) // everything as utf8 so that BigInt cast will work
+//                 .finish().expect("DataFrame")
+//     }
+// }
 
 #[cfg(test)]
 mod tests {
