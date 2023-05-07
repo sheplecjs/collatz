@@ -9,7 +9,7 @@ use postgres::{Client, NoTls};
 
 pub fn create_postgres_table(conn_string: String) {
     let mut client = Client::connect(&conn_string, NoTls).expect("Error establishing connection.");
-    client.batch_execute("
+    client.execute("
     CREATE TABLE IF NOT EXISTS collatz (
         id       SERIAL PRIMARY KEY,
         Number   TEXT NOT NULL,
