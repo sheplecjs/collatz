@@ -78,6 +78,5 @@ MIT
 
 ## Next up
 
-- Switch to storing history in sqlite
 - Trigger early exit once a tested start is hit mid-sequence
 - Implement initial check for power of 2 if length of input is large enough
