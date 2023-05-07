@@ -5,6 +5,28 @@ use polars::df;
 use std::io::Write;
 use std::path::Path;
 use std::fs::File;
+use postgres::{Client, NoTls};
+
+pub fn create_postgres_table(conn_string: String) {
+    let mut client = Client::connect(&conn_string, NoTls).expect("Error establishing connection.");
+    client.batch_execute("
+    CREATE TABLE IF NOT EXISTS collatz (
+        id       SERIAL PRIMARY KEY,
+        Number   TEXT NOT NULL,
+        Steps    TEXT NOT NULL
+    )
+    ").expect("Error creating psql table.");
+
+}
+
+pub fn update_psql(n: BigInt, steps: u32, conn_string: String) {
+    let mut client = Client::connect(&conn_string, NoTls).expect("Error establishing connection.");
+
+    client.execute(
+        "INSERT INTO collatz (Number, Steps) VALUES ($1, $2)",
+        &[&n.to_string(), &steps.to_string()],
+    ).expect("Error updating psql table.");
+}
 
 pub fn update_flat_file(n: BigInt, step: u32) {
 
@@ -46,51 +68,3 @@ pub fn update_flat_file(n: BigInt, step: u32) {
                 .finish().expect("DataFrame")
     }
 }
-
-// pub fn create_db() -> Result<()> {
-//     let conn = Connection::open("collatz.db")?;
-
-//     conn.execute(
-//         "create table if not exists collatz (
-//              id integer primary key,
-//              start text not null unique,
-//              steps integer not null
-//          )",
-//         NO_PARAMS,
-//     )?;
-
-//     conn.execute(
-//         "create table if not exists highest (
-//             start text not null unique,
-//             steps integer not null
-//         )",
-//         NO_PARAMS,
-//     )?;
-
-//     Ok(())
-// }
-
-// pub fn add_entry(start: BigInt, steps: u32) -> Result<()> {
-//     let conn = Connection::open("collatz.db")?;
-
-//     conn.execute(
-//         "insert into collatz (start, steps) values (?1, ?2)",
-//         &[&start.to_string(), &steps],)?;
-
-//     Ok(())
-// }
-
-// pub fn check_for_entry(start: BigInt) -> String {
-
-//     let conn = Connection::open("collatz.db")?;
-
-//     conn.execute(
-//         "select steps from collatz where start = ?1",
-//         &start.to_string()).unwrap();
-
-// }
-
-// pub fn get_highest_continuous() -> BigInt {
-//     // may need a recursive expression or CTE to get this...
-//     let conn = Connection::open("collatz.db")?;
-// }
