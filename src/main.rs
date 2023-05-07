@@ -15,7 +15,27 @@ use polars::df;
 
 fn main() {
 
+    let mut save_option = String::new();
+
     loop {
+        println!(concat!(
+            "Input psql connection string to use db.\n",
+            "Input 'flat' to use flat file (default)"
+        ));
+    
+        io::stdin()
+            .read_line(&mut save_option)
+            .expect("Failed to read line");
+
+        if save_option.is_empty() {
+            save_option = String::from("flat")
+        };
+
+        break;
+    };
+
+    loop {
+        
         println!(concat!(
             "Input a positive integer to show its Collatz sequence.\n",
             "Input 'random' to use a random integer.\n",
@@ -98,7 +118,7 @@ fn main() {
                         for x in 0..end {
                             let now_range: Instant = Instant::now();
                             let t: BigInt = BigInt::from(start.clone() + BigInt::from(x));
-                            sequence(t, false, now_range);
+                            sequence(t, false, now_range, save_option.clone());
                         }
                         continue;
                     },
@@ -109,11 +129,11 @@ fn main() {
             },
         };
 
-        sequence(input, def_verbose, now)
+        sequence(input, def_verbose, now, save_option.clone())
     }
 }
 
-fn sequence(n: BigInt, verbose: bool, now: Instant) {
+fn sequence(n: BigInt, verbose: bool, now: Instant, save_option: String) {
     let mut seq: BigInt = n.clone(); // for current transformation;
     let mut step: u32 = 1;
 
@@ -136,20 +156,29 @@ fn sequence(n: BigInt, verbose: bool, now: Instant) {
             let secs = elapsed_time.as_secs();
             println!("{n} reduced to 1 in {step} steps. Took {secs} seconds.");
 
-            // refactor out read old; DONE
-            let df_old: DataFrame = read_history();
+            match save_option.as_ref() {
+                "flat" => {
+                
+                // refactor out read old; DONE
+                let df_old: DataFrame = read_history();
 
-            // refactor out make new;
-            let new_data: DataFrame = make_new_frame(n, step);
+                // refactor out make new;
+                let new_data: DataFrame = make_new_frame(n, step);
 
-            // refactor out stack old and new;
-            let mut df_new: DataFrame = stack_old_and_new(df_old, new_data);
+                // refactor out stack old and new;
+                let mut df_new: DataFrame = stack_old_and_new(df_old, new_data);
 
-            //  refactor out get unique;
-            df_new = get_unique_df(df_new);
+                //  refactor out get unique;
+                df_new = get_unique_df(df_new);
 
-            // refactor out write new;
-            write_new_csv(df_new);
+                // refactor out write new;
+                write_new_csv(df_new);
+                },
+                
+                _ => {
+                    println!("Connection string option here");
+                },
+            };
 
             break;
         }
