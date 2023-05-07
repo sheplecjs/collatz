@@ -13,7 +13,7 @@ fn main() {
 
     loop {
         println!(concat!(
-            "Input psql connection string to use db (default, host=localhost user=postgresql).\n",
+            "Input psql connection string to use db (default, postgresql://postgres:@db:5432/postgres).\n",
             "Input 'flat' to use flat file."
         ));
     
@@ -26,10 +26,10 @@ fn main() {
                 break;
             },
             "" => {
-                save_option = String::from("host=localhost user=postgres");
-            }
+                save_option = String::from("postgresql://postgres:@db:5432/postgres");
+            },
             _ => {
-                continue;
+                
             }
         };
         db::create_postgres_table(save_option.clone());
