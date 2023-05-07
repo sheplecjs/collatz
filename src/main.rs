@@ -13,18 +13,26 @@ fn main() {
 
     loop {
         println!(concat!(
-            "Input psql connection string to use db.\n",
-            "Input 'flat' to use flat file (default)"
+            "Input psql connection string to use db (default, host=localhost user=postgresql).\n",
+            "Input 'flat' to use flat file."
         ));
     
         io::stdin()
             .read_line(&mut save_option)
             .expect("Failed to read line");
 
-        if save_option.is_empty() {
-            save_option = String::from("flat")
+        match save_option.trim() {
+            "flat" => {
+                break;
+            },
+            "" => {
+                save_option = String::from("host=localhost user=postgres");
+            }
+            _ => {
+                continue;
+            }
         };
-
+        db::create_postgres_table(save_option.clone());
         break;
     };
 
@@ -150,13 +158,13 @@ fn sequence(n: BigInt, verbose: bool, now: Instant, save_option: String) {
             let secs = elapsed_time.as_secs();
             println!("{n} reduced to 1 in {step} steps. Took {secs} seconds.");
 
-            match save_option.as_ref() {
+            match save_option.trim() {
                 "flat" => {
                     db::update_flat_file(n, step);
                 },
                 
                 _ => {
-                    println!("Connection string option here");
+                    db::update_psql(n, step, save_option.clone());
                 },
             };
 
