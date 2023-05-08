@@ -10,7 +10,7 @@ use std::path::Path;
 pub fn create_postgres_table(conn_string: String) {
     let mut client = Client::connect(&conn_string, NoTls).expect("Error establishing connection.");
     client
-        .execute(
+        .batch_execute(
             "
     CREATE TABLE IF NOT EXISTS collatz (
         id       SERIAL PRIMARY KEY,
