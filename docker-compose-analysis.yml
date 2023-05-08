@@ -21,7 +21,7 @@ services:
   analysis:
     ports:
       - 8888:8888
-    image: jupyter/base-notebook
+    build: analysis/.
     volumes:
       - ./analysis/notebooks:/home/jovyan
     stdin_open: true
