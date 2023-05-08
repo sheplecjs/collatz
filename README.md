@@ -16,7 +16,7 @@ A Dockerfile is provided running the rust:slim-buster image.
 
 A docker-compose file is provided which will run a postgresql db alongside the main CLI with the following command:
 
-`docker-compose up --rm collatz`
+`docker-compose run --rm collatz`
 
 Running and/or building from source requires a stable version of Rust and Cargo.
 
@@ -34,7 +34,9 @@ The release profile for cargo build is modified from defaults in the following w
 
 ## Usage
 
-At startup, the CLI will prompt for a storage option - defaulting to a local postgres database. Then it will prompt for a positive integer to run through a Collatz sequence. It is also possible to input 'random'. Steps in the sequence are shown as they are calculated. Upon completion, the total steps are printed to the console and you are returned to the starting prompt. Specifying 'range' will allow you to specify a starting point and a number of incrementing iterations. Massive numbers are supported using the BigInt struct. Using any of the provided options, unique solutions will be added to the persistent history file as they are reached, recording the input and number of steps taken. An input of 'exit' will exit the program.
+At startup, the CLI will prompt for a storage option accepting either a postgres connection string or 'flat' to write to a csv file, defaulting to the postgres instance spun up by the docker-compose definiton.
+
+The CLI will then prompt for a positive integer to run through a Collatz sequence. It is also possible to input 'random'. Steps in the sequence are shown as they are calculated. Upon completion, the total steps are printed to the console and you are returned to the starting prompt. Specifying 'range' will allow you to specify a starting point and a number of incrementing iterations. Massive numbers are supported using the BigInt struct. Using any of the provided options, unique solutions will be added to the persistent history file as they are reached, recording the input and number of steps taken. An input of 'exit' will exit the program.
 
 For example:
 
