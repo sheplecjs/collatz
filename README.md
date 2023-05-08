@@ -14,9 +14,13 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 
 A Dockerfile is provided running the rust:slim-buster image.
 
-A docker-compose file is provided which will run a postgresql db alongside the main CLI with the following command:
+A docker-compose file is provided which will run a postgresql db alongside the main CLI. Run these and the CLI in the current terminal with the following command:
 
-`docker-compose run --rm collatz`
+`docker-compose -f docker-compose-collatz.yml run --rm collatz`
+
+A seperate environment is provided where the db and jupyterlab is available for analysis of results:
+
+`docker-compose -f docker-compose-analysis.yml up`
 
 Running and/or building from source requires a stable version of Rust and Cargo.
 
