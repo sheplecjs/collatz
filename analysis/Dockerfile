@@ -1,3 +1,6 @@
+# adapted from Jupyter Notebook Scientific Python Stack 
+# https://github.com/jupyter/docker-stacks/tree/main/scipy-notebook
+
 FROM  jupyter/minimal-notebook
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -19,12 +22,12 @@ RUN mamba install --yes \
     'psycopg2-binary' \
     'matplotlib' \
     'seaborn' \
+    'numpy' \
     'pandas' && \
     mamba clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Install facets which does not have a pip or conda package at the moment
 WORKDIR /tmp
 RUN git clone https://github.com/PAIR-code/facets.git && \
     jupyter nbextension install facets/facets-dist/ --sys-prefix && \
@@ -32,7 +35,6 @@ RUN git clone https://github.com/PAIR-code/facets.git && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
-# Import matplotlib the first time to build the font cache.
 ENV XDG_CACHE_HOME="/home/${NB_USER}/.cache/"
 
 RUN MPLBACKEND=Agg python -c "import matplotlib.pyplot" && \
