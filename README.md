@@ -12,15 +12,21 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 
 ## Installation
 
-A Dockerfile is provided running the rust:slim-buster image.
+### Docker
 
-A docker-compose file is provided which will run a postgresql db alongside the main CLI. Run these and the CLI in the current terminal with the following command:
+A Dockerfile is provided running the rust:slim-buster image. Building and running this image will open the main CLI.
+
+### Full Docker Environments
+
+A docker-compose file is provided which will run a postgresql db with a local volume for data alongside the main CLI. Run these and the CLI in the current terminal with the following command:
 
 `docker-compose -f docker-compose-collatz.yml run --rm collatz`
 
-A seperate environment is provided where the db and jupyterlab is available for analysis of results:
+Another compose definition is provided where the db and jupyterlab is available for analysis of results:
 
 `docker-compose -f docker-compose-analysis.yml up`
+
+### Build from Source
 
 Running and/or building from source requires a stable version of Rust and Cargo.
 
@@ -28,7 +34,7 @@ Running and/or building from source requires a stable version of Rust and Cargo.
 
 `RUSTFLAGS="-C target-cpu=native" cargo build --release` - to compile an optimized binary.
 
-### Note:
+#### Notes:
 
 The release profile for cargo build is modified from defaults in the following ways which offer potentially better binary performance at the cost of increased compile time:
 
@@ -88,5 +94,5 @@ MIT
 
 ## Next up
 
-- Trigger early exit once a tested start is hit mid-sequence
-- Implement initial check for power of 2 if length of input is large enough
+- Compute largest consequtive solution from history on startup for no-lookup early sequence solution
+- Implement async psql update function
