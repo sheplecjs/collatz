@@ -2,3 +2,4 @@
 history.csv
 /db-data
 /analysis/notebooks/.*
+.DS_Store
