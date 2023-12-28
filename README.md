@@ -10,7 +10,11 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 + Steps, and computation time reporting for random bits and ranges of inputs
 + Recording of unique inputs and step values to a postgresql connection or flat file
 
-## Installation
+## Usage
+
+### Dev Container
+
+A dev container is defined which provides rustfmt and git.
 
 ### Docker
 
@@ -33,14 +37,6 @@ Running and/or building from source requires a stable version of Rust and Cargo.
 `cargo run` - to run the main CLI interface.
 
 `RUSTFLAGS="-C target-cpu=native" cargo build --release` - to compile an optimized binary.
-
-#### Notes:
-
-The release profile for cargo build is modified from defaults in the following ways which offer potentially better binary performance at the cost of increased compile time:
-
-+ Link Time Optimization is set to 'true' (same as 'fat')
-+ Codegen units are set to 1 (default for --release is 16)
-+ Panic is set to 'abort' - this just fails more quickly
 
 ## Usage
 
@@ -91,8 +87,8 @@ Input 'exit' to exit.
 ## License
 
 MIT
-
+<!-- 
 ## Next up
 
 - Compute largest consequtive solution from history on startup for no-lookup early sequence solution
-- Implement async psql update function
+- Implement async psql update function -->

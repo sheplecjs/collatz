@@ -12,6 +12,4 @@ polars = "0.27"
 postgres = "0.19.5"
 
 [profile.release]
-lto = true
-codegen-units = 1
 panic = "abort"
