@@ -9,6 +9,9 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 + Detailed sequences for specific inputs with annotated transformations
 + Steps, and computation time reporting for random bits and ranges of inputs
 + Recording of unique inputs and step values to a postgresql connection or flat file
++ Support for calculatng sequences for extrememly large numbers beyond conventional integer size limits
+
+See also [c-ollatz](https://github.com/sheplecjs/c-ollatz) for a C++ implentation of the base Collatz logic with the [GMP Interface](https://gmplib.org/manual/C_002b_002b-Class-Interface#index-C_002b_002b-interface).
 
 ## Usage
 
