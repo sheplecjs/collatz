@@ -10,7 +10,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - ./db-data/:/var/lib/postgresql/data/
+      - pg-data:/var/lib/postgresql/data/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -21,9 +21,12 @@ services:
       - 8888:8888
     build: analysis/.
     volumes:
-      - ./analysis/notebooks:/home/jovyan
+      - collatz_notebooks:/home/jovyan
     stdin_open: true
     tty: true
     depends_on:
       db:
         condition: service_healthy
+volumes:
+  pg-data:
+  collatz_notebooks:

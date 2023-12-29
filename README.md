@@ -25,7 +25,7 @@ A Dockerfile is provided running the rust:slim-buster image. Building and runnin
 
 ### Full Docker Environments
 
-A docker-compose file is provided which will run a postgresql db with a local volume for data alongside the main CLI. Run these and the CLI in the current terminal with the following command:
+A docker-compose file is provided which will run a postgresql db with a local volume for data alongside the main CLI. For data to persist, be sure there's a volume available - `docker volume create pgdata. Run the CLI in the current terminal with the following command:
 
 `docker-compose -f docker-compose-collatz.yml run --rm collatz`
 
