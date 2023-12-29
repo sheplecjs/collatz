@@ -17,7 +17,7 @@ See also [c-ollatz](https://github.com/sheplecjs/c-ollatz) for a C++ implentatio
 
 ### Makefile
 
-A Makefile is provided that provides useful shorcuts for formatting, compiling, and running in development. Run `make` to see documentation for available commands.
+A Makefile provides useful shorcuts for formatting, compiling, and running in development. Run `make` to see documentation for available commands.
 
 ### Dev Container
 
