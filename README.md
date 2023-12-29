@@ -13,7 +13,7 @@ This project aims to define a CLI for interactively exploring the Collatz conjec
 
 See also [c-ollatz](https://github.com/sheplecjs/c-ollatz) for a C++ implentation of the base Collatz logic with the [GMP Interface](https://gmplib.org/manual/C_002b_002b-Class-Interface#index-C_002b_002b-interface).
 
-## Usage
+## Environments
 
 ### Makefile
 
