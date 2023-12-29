@@ -15,6 +15,10 @@ See also [c-ollatz](https://github.com/sheplecjs/c-ollatz) for a C++ implentatio
 
 ## Usage
 
+### Makefile
+
+A Makefile is provided that provides useful shorcuts for formatting, compiling, and running in development. Run `make` to see documentation for available commands.
+
 ### Dev Container
 
 A dev container is defined which provides rustfmt and git.
